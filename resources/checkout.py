@@ -6,6 +6,9 @@ cart_repo = CartRepository()
 from repository.product import ProductRepository
 prod_repo = ProductRepository()
 
+from service.deal import DealService
+deal_serv = DealService()
+
 VAT = 1.196
 
 class CheckoutResource(restful.Resource):
@@ -25,6 +28,11 @@ class CheckoutResource(restful.Resource):
     for product_id in cart:
       product = self.ensure_product_exists(product_id)
       total += product['price']
+    deals = deal_serv.compute(cart_id)
+    deal_amount = 1
+    for deal in deals.values():
+      deal_amount -= deal
+    total = total*deal_amount
     return round(total*VAT, 2)
 
 def register(api):

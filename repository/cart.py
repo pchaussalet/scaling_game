@@ -1,5 +1,5 @@
 class CartRepository(object):
-  carts = {0: [0, 1], 1: [0], 2: [1]}
+  carts = {0: [0, 1], 1: [0], 2: [1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
   def list(self):
     return self.carts
   

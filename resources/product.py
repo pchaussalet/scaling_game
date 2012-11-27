@@ -1,4 +1,4 @@
-from flask import request, redirect
+from flask import request, redirect, make_response
 from flask.ext import restful
 
 from repository.product import ProductRepository
@@ -7,6 +7,9 @@ repo = ProductRepository()
 class ProductListResource(restful.Resource):
   def get(self):
     return repo.list()
+
+  def options(self):
+    print request
 
   def put(self):
     products = repo.list()
