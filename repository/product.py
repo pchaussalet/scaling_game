@@ -1,17 +1,18 @@
+from repository.mongo import Mongo
+
 class ProductRepository(object):
-  products = {0: {'name': 'Product one', 'price': 10}, 1: {'name': 'Product two', 'price': 20}}
+  mongo = Mongo('localhost:27017', 'products')
   def list(self):
-    return self.products
+    return self.mongo.list()
 
   def exists(self, prod_id):
-    return prod_id in self.products.keys()
+    return self.mongo.exists({'_id': prod_id})
 
   def get(self, prod_id):
-    return self.products[prod_id]
+    return self.mongo.get(prod_id)
 
-  def set(self, prod_id, data):
-    self.products[prod_id] = data
-    return self.get(prod_id)
+  def set(self, data):
+    return self.mongo.save(data)
 
   def rm(self, prod_id):
-    del self.products[prod_id]
+    self.mongo.delete(prod_id)

@@ -8,13 +8,8 @@ class ProductListResource(restful.Resource):
   def get(self):
     return repo.list()
 
-  def options(self):
-    print request
-
   def put(self):
-    products = repo.list()
-    prod_id = max(products.keys()) + 1
-    products[prod_id] = request.json
+    prod_id = repo.set(request.json)
     return prod_id, 201
 
 class ProductResource(restful.Resource):
@@ -37,4 +32,4 @@ class ProductResource(restful.Resource):
 
 def register(api):
   api.add_resource(ProductListResource, '/product')
-  api.add_resource(ProductResource, '/product/<int:prod_id>')
+  api.add_resource(ProductResource, '/product/<string:prod_id>')
